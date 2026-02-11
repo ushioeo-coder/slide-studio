@@ -1,0 +1,46 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv
+venv/
+ENV/
+
+# Streamlit
+.streamlit/
+secrets.toml
+
+# Editor
+.vscode/
+.idea/
+
+# Local/Temp files
+*.log
+temp_assets/
+debug_output.mp4
+final_presentation.mp4
+temp-audio.m4a
+debug_img.png
+debug_audio.mp3
+.env

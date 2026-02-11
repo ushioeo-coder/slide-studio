@@ -1,0 +1,9 @@
+streamlit
+google-generativeai
+pillow
+python-dotenv
+tenacity
+requests
+gTTS
+moviepy
+edge-tts
