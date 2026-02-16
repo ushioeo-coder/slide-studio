@@ -1,0 +1,5 @@
+fonts-noto-cjk
+fonts-ipafont-gothic
+ffmpeg
+libsm6
+libxext6

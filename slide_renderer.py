@@ -8,6 +8,11 @@ def load_japanese_font(size):
     """
     # Common Windows Japanese fonts
     font_candidates = [
+        # Linux / Streamlit Cloud (Debian)
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+        "/usr/share/fonts/truetype/fonts-japanese-gothic.ttf",
+        # Windows
         "meiryo.ttc",       # Meiryo
         "msgothic.ttc",     # MS Gothic
         "yugothb.ttc",      # Yu Gothic Bold
@@ -69,8 +74,10 @@ def draw_slide(background_image, title, bullet_points):
     draw = ImageDraw.Draw(canvas)
     
     # Fonts
-    title_font = load_japanese_font(70)
-    body_font = load_japanese_font(45)
+    # Fonts
+    # Adjusted sizes for better visibility
+    title_font = load_japanese_font(90)  # Was 70
+    body_font = load_japanese_font(60)   # Was 45
     
     # Margins for text area
     text_area_width = target_size[0] - img_width
