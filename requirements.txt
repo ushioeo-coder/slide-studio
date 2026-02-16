@@ -4,6 +4,7 @@ pillow
 python-dotenv
 tenacity
 requests
-gTTS
-moviepy
+moviepy==1.0.3
 edge-tts
+imageio-ffmpeg
+imageio

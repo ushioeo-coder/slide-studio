@@ -1,4 +1,4 @@
-from moviepy import *
+from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips, vfx
 from PIL import Image
 import os
 
@@ -31,12 +31,11 @@ def create_video(slides_data, output_path="output_video.mp4"):
             duration = audio_clip.duration
             
             # Create Image Clip with same duration
-            # Resize logic can be added here if needed, but we assume 1920x1080
-            image_clip = ImageClip(img_path).with_duration(duration)
-            image_clip = image_clip.with_audio(audio_clip)
+            image_clip = ImageClip(img_path).set_duration(duration)
+            image_clip = image_clip.set_audio(audio_clip)
             
-            # Optional: Add fadein/fadeout for smooth transitions
-            image_clip = image_clip.with_effects([vfx.FadeIn(0.5)])
+            # Optional: Add fadein for smooth transitions
+            image_clip = image_clip.fadein(0.5)
             
             clips.append(image_clip)
             
@@ -48,24 +47,22 @@ def create_video(slides_data, output_path="output_video.mp4"):
         final_video = concatenate_videoclips(clips, method="compose")
         
         # Write to file (MP4)
-        # Using 'ultrafast' preset for speed during generation
-        # audio_codec='aac' is standard, but if it hangs, we can try leaving it or using 'libmp3lame'
-        # temp_audiofile is required on some Windows systems to avoid permission errors
-        # Write to file (MP4)
         print(f"Writing video to {output_path}...")
         
-        # Using settings that were verified to work in debug script
         final_video.write_videofile(
             output_path, 
             fps=24, 
             codec='libx264', 
             audio_codec='aac', 
             preset='ultrafast', 
-            threads=4,
+            threads=2,  # Reduced for cloud environment
             logger='bar'
         )
         
-        return output_path
+        # Clean up clips to free memory
+        for clip in clips:
+            clip.close()
+        final_video.close()
         
         return output_path
         
