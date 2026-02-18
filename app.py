@@ -19,44 +19,31 @@ st.set_page_config(
 with st.sidebar:
     st.header("⚙️ 設定")
     
-    # API Key Handling
-    api_key_input = st.text_input("Gemini API Key", type="password", help="Google AI Studioで取得したAPIキーを入力してください")
+    # API Key Configuration (Loaded from Secrets/Env)
+    # Gemini API Key
+    api_key = None
+    try:
+        if "GEMINI_API_KEY" in st.secrets:
+            api_key = st.secrets["GEMINI_API_KEY"]
+    except FileNotFoundError:
+        pass
     
-    # Try to get key from secrets/env if not provided
-    api_key = api_key_input
+    if not api_key and "GEMINI_API_KEY" in os.environ:
+        api_key = os.environ["GEMINI_API_KEY"]
+
     if not api_key:
-        # Check secrets safely
-        try:
-            if "GEMINI_API_KEY" in st.secrets:
-                api_key = st.secrets["GEMINI_API_KEY"]
-                st.success("API Key loaded from secrets")
-        except FileNotFoundError:
-            pass # Secrets file not found, ignore
-            
-        # Check environment variable
-        if not api_key and "GEMINI_API_KEY" in os.environ:
-            api_key = os.environ["GEMINI_API_KEY"]
-            st.success("API Key loaded from environment")
+        st.error("⚠️ システムエラー: APIキーが設定されていません。管理者に連絡してください。")
+
+    # Pexels API Key
+    pexels_api_key = None
+    try:
+        if "PEXELS_API_KEY" in st.secrets:
+            pexels_api_key = st.secrets["PEXELS_API_KEY"]
+    except FileNotFoundError:
+        pass
     
-    st.divider()
-    
-    # Pexels API Key Handling
-    pexels_api_key_input = st.text_input("Pexels API Key", type="password", help="Pexelsで取得したAPIキーを入力してください (画像検索用)")
-    
-    # Try to load from env
-    pexels_api_key = pexels_api_key_input
-    if not pexels_api_key:
-        try:
-            if "PEXELS_API_KEY" in st.secrets:
-                pexels_api_key = st.secrets["PEXELS_API_KEY"]
-        except FileNotFoundError:
-            pass
-        
-        if not pexels_api_key and "PEXELS_API_KEY" in os.environ:
-             pexels_api_key = os.environ["PEXELS_API_KEY"]
-    
-    if pexels_api_key:
-        st.caption("✅ Pexels API Key loaded")
+    if not pexels_api_key and "PEXELS_API_KEY" in os.environ:
+            pexels_api_key = os.environ["PEXELS_API_KEY"]
     
     st.divider()
     
