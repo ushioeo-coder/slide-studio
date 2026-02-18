@@ -46,9 +46,18 @@ def create_video(slides_data, output_path="output_video.mp4"):
         # Concatenate all clips
         final_video = concatenate_videoclips(clips, method="compose")
         
+        # Debug: Check ffmpeg binary
+        import imageio_ffmpeg
+        print(f"ffmpeg binary found at: {imageio_ffmpeg.get_ffmpeg_exe()}")
+
         # Write to file (MP4)
         print(f"Writing video to {output_path}...")
         
+        # Define temp audio path to avoid permission issues
+        temp_audio = "temp_audio_for_video.m4a"
+        if os.path.exists(temp_audio):
+            os.remove(temp_audio)
+
         final_video.write_videofile(
             output_path, 
             fps=24, 
@@ -56,7 +65,9 @@ def create_video(slides_data, output_path="output_video.mp4"):
             audio_codec='aac', 
             preset='ultrafast', 
             threads=2,  # Reduced for cloud environment
-            logger='bar'
+            logger='bar',
+            temp_audiofile=temp_audio,
+            remove_temp=True
         )
         
         # Clean up clips to free memory
