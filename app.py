@@ -63,7 +63,7 @@ with st.sidebar:
 
 # --- Main Area ---
 st.title("🎬 E&Endeavor Slide Studio")
-st.markdown("テキストを入力すると、AIが「スライド構成」「画像生成プロンプト」「台本」を自動生成します。")
+st.markdown("テキストを入力すると、AIが「台本」「スライド」「音声」を自動生成し、動画に仕上げます。")
 
 # Input Area
 user_text = st.text_area("講義内容やテーマを入力してください", height=200, placeholder="例：AI技術の建設業界への応用について、初心者向けに解説してください。")
